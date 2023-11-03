@@ -19,7 +19,7 @@ namespace SillyGooseSchool.Pages.Courses
             _context = context;
         }
 
-      public Course Course { get; set; }
+        public Course Course { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,14 +28,14 @@ namespace SillyGooseSchool.Pages.Courses
                 return NotFound();
             }
 
-            var course = await _context.Courses.FirstOrDefaultAsync(m => m.CourseID == id);
-            if (course == null)
+            Course = await _context.Courses
+                .AsNoTracking()
+                .Include(c => c.Department)
+                .FirstOrDefaultAsync(m => m.CourseID == id);
+
+            if (Course == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                Course = course;
             }
             return Page();
         }
