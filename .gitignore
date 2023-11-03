@@ -1,0 +1,5 @@
+obj/
+bin/
+.DS_Store
+CU.db*
+csci340lab9.sln
